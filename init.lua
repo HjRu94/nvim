@@ -973,6 +973,63 @@ require('lazy').setup({
       },
     },
   },
+  {
+  'jay-babu/mason-null-ls.nvim',
+  dependencies = { 'williamboman/mason.nvim', 'jose-elias-alvarez/null-ls.nvim' },
+  },
+  {
+    'jose-elias-alvarez/null-ls.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = { 'nvim-lua/plenary.nvim', 'williamboman/mason.nvim' },
+    config = function()
+      local null_ls = require('null-ls')
+      local mason_null_ls = require('mason-null-ls')
+
+      -- Setup null-ls with linters
+      null_ls.setup({
+        sources = {
+          -- Python
+          null_ls.builtins.diagnostics.flake8, -- Python linter
+          null_ls.builtins.formatting.black, -- Python formatter
+
+          -- Node.js
+          null_ls.builtins.diagnostics.eslint_d, -- Node.js linter
+          null_ls.builtins.formatting.prettierd, -- Node.js formatter
+
+          -- Rust
+          null_ls.builtins.diagnostics.clippy, -- Rust linter
+          null_ls.builtins.formatting.rustfmt, -- Rust formatter
+
+          -- C++
+          null_ls.builtins.diagnostics.cppcheck, -- C++ linter
+          null_ls.builtins.formatting.clang_format, -- C++ formatter
+
+          -- Docker
+          null_ls.builtins.diagnostics.hadolint, -- Dockerfile linter
+
+          -- XML
+          null_ls.builtins.formatting.xmllint, -- XML formatter
+        },
+      })
+
+      -- Integrate with Mason for automatic tool installation
+      mason_null_ls.setup({
+        ensure_installed = {
+          'flake8',       -- Python
+          'black',        -- Python
+          'eslint_d',     -- Node.js
+          'prettierd',    -- Node.js
+          'clippy',       -- Rust
+          'rustfmt',      -- Rust
+          'cppcheck',     -- C++
+          'clang-format', -- C++
+          'hadolint',     -- Docker
+          'xmllint',      -- XML
+        },
+        automatic_installation = true,
+      })
+    end,
+  },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and

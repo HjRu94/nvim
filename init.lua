@@ -189,6 +189,9 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- toggle nvim-tree
+vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -924,12 +927,51 @@ require('lazy').setup({
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
+
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
     --
     --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+  },
+
+  { -- A file explorer tree for navigating and managing your project files
+    'nvim-tree/nvim-tree.lua',
+    dependencies = { 'nvim-tree/nvim-web-devicons' }, -- Optional: for file icons
+    opts = {
+      view = {
+        width = 30, -- Width of the sidebar
+        side = 'left', -- Position of the sidebar
+      },
+      renderer = {
+        icons = {
+          show = {
+            file = true,
+            folder = true,
+            folder_arrow = true,
+            git = true,
+          },
+        },
+      },
+      git = {
+        enable = true, -- Show git status icons in the tree
+        ignore = false,
+      },
+      actions = {
+        open_file = {
+          quit_on_open = true, -- Close the tree when opening a file
+        },
+      },
+      filters = {
+        dotfiles = false, -- Show hidden files (dotfiles)
+        custom = {},      -- No custom ignore patterns
+      },
+      filesystem_watchers = {
+        enable = true,  -- Enable updates for changes in large folders
+        debounce_delay = 50, -- Delay in milliseconds
+      },
+    },
   },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the

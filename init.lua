@@ -837,6 +837,33 @@ require('lazy').setup({
       }
     end,
   },
+    {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function()
+            require("copilot").setup({
+                suggestion = {
+                    auto_trigger = true,
+                    keymap = {
+                        accept = "<Tab>",          -- Accept suggestion
+                        accept_word = "<C-Right>", -- Accept word
+                        accept_line = "<C-l>",     -- Accept entire line
+                        next = "<C-n>",            -- Next suggestion
+                        prev = "<C-p>",            -- Previous suggestion
+                        dismiss = "<C-]>",         -- Dismiss suggestion
+                    },
+                },
+                panel = {
+                    enabled = true,
+                    layout = {
+                        position = "right",
+                        ratio = 0.4,
+                    },
+                },
+            })
+        end,
+    },
  -- colorchemees
   { 'folke/tokyonight.nvim' },
   { 'ellisonleao/gruvbox.nvim' },

@@ -257,7 +257,15 @@ require('lazy').setup({
       },
     },
   },
-
+  {
+    'sindrets/diffview.nvim',
+    dependencies = 'nvim-lua/plenary.nvim',
+    config = function()
+      require('diffview').setup {}
+      vim.api.nvim_set_keymap('n', '<leader>gd', ':DiffviewOpen<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>gh', ':DiffviewFileHistory<CR>', { noremap = true, silent = true })
+    end
+  },
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
